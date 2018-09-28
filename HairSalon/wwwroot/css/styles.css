@@ -12,14 +12,10 @@ h2 {
   text-shadow: black;
   text-align: center;
 }
-
-
-p, h3 {
-   font-family: 'Anton';
-   font-size: 22px;
-   color: brown;
-   text-shadow: black;
-
+p {
+  font-family: 'Aclonica';
+  font-size: 10px;
+  
 }
 
 .navbar {
