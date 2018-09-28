@@ -10,11 +10,13 @@ namespace HairSalon.Models
   {
     private int _id;
     private string _name;
+    // private int _specialtyId;
 
     public Stylist(string Name, int Id = 0)
     {
       _id = Id;
       _name = Name;
+      // _specialtyId = specialtyId;
     }
     public override bool Equals(System.Object otherStylist)
     {
@@ -42,6 +44,10 @@ namespace HairSalon.Models
     {
       return _id;
     }
+    // public int GetSpecialtyId()
+    // {
+    //   return _specialtyId;
+    // }
 
     public static List<Stylist> GetAll()
     {
@@ -55,6 +61,7 @@ namespace HairSalon.Models
       {
         int stylistId = rdr.GetInt32(0);
         string stylistName = rdr.GetString(1);
+        // int stylistSpecialtyId = rdr.GetString(2);
         Stylist newStylist = new Stylist(stylistName, stylistId);
         allStylists.Add(newStylist);
       }

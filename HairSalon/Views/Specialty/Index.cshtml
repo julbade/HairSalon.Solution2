@@ -1,0 +1,16 @@
+@{
+Layout = "_Layout";
+}
+<h1>Your Specialties!</h1>
+<ul>
+@foreach(var item in Model)
+{
+<li><a href="/specialties/@item.GetSpecialtyId()"> @item.GetSpecialtyName()</a></li>
+}
+</ul>
+<br>
+<p><a href="/specialties/new">Add a new stylist.</a></p>
+<hr>
+<form action="specialties/delete" method="post">
+<button type="submit" class="btn btn-info">Clear All</button>
+</form>

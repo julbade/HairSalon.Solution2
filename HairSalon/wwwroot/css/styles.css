@@ -17,8 +17,8 @@ h2 {
 p, h3 {
    font-family: 'Anton';
    font-size: 22px;
-  color: brown;
-  text-shadow: black;
+   color: brown;
+   text-shadow: black;
 
 }
 
@@ -42,5 +42,5 @@ p, h3 {
     background-color: yellow;
 }
 body {
-  background: #e6e6e6;
+  background: white;
 }
