@@ -10,13 +10,10 @@ namespace HairSalon.Models
   {
     private int _id;
     private string _name;
-    // private int _specialtyId;
-
     public Stylist(string Name, int Id = 0)
     {
       _id = Id;
       _name = Name;
-      // _specialtyId = specialtyId;
     }
     public override bool Equals(System.Object otherStylist)
     {
@@ -44,10 +41,6 @@ namespace HairSalon.Models
     {
       return _id;
     }
-    // public int GetSpecialtyId()
-    // {
-    //   return _specialtyId;
-    // }
 
     public static List<Stylist> GetAll()
     {
@@ -61,16 +54,15 @@ namespace HairSalon.Models
       {
         int stylistId = rdr.GetInt32(0);
         string stylistName = rdr.GetString(1);
-        // int stylistSpecialtyId = rdr.GetString(2);
         Stylist newStylist = new Stylist(stylistName, stylistId);
         allStylists.Add(newStylist);
       }
 
-        conn.Close();
-        if (conn != null)
-        {
+      conn.Close();
+      if (conn != null)
+      {
         conn.Dispose();
-        }
+      }
       return allStylists;
     }
 
@@ -89,7 +81,7 @@ namespace HairSalon.Models
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
-      //
+
       conn.Close();
       if (conn != null)
       {
@@ -147,33 +139,92 @@ namespace HairSalon.Models
 
     public List<Client> GetClients()
     {
-        List<Client> allStylistClients = new List<Client> {};
-        MySqlConnection conn = DB.Connection();
-        conn.Open();
-        var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM clients WHERE stylistId = @stylistId;";
+      List<Client> allStylistClients = new List<Client> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM clients WHERE stylistId = @stylistId;";
 
-        MySqlParameter stylistId = new MySqlParameter();
-        stylistId.ParameterName = "@stylistId";
-        stylistId.Value = this._id;
-        cmd.Parameters.Add(stylistId);
+      MySqlParameter stylistId = new MySqlParameter();
+      stylistId.ParameterName = "@stylistId";
+      stylistId.Value = this._id;
+      cmd.Parameters.Add(stylistId);
 
 
-        var rdr = cmd.ExecuteReader() as MySqlDataReader;
-        while(rdr.Read())
-        {
-          int clientId = rdr.GetInt32(0);
-          string clientName = rdr.GetString(1);
-          int clientStylistId = rdr.GetInt32(2);
-          Client newClient = new Client(clientName, clientStylistId, clientId);
-          allStylistClients.Add(newClient);
-        }
-          conn.Close();
-          if (conn != null)
-            {
-                conn.Dispose();
-            }
-          return allStylistClients;
-        }
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int clientId = rdr.GetInt32(0);
+        string clientName = rdr.GetString(1);
+        int clientStylistId = rdr.GetInt32(2);
+        Client newClient = new Client(clientName, clientStylistId, clientId);
+        allStylistClients.Add(newClient);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allStylistClients;
+    }
+
+
+    public void AddSpecialty(Specialty newSpecialty)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO stylists_specialties (stylist_id, specialty_id) VALUES (@StylistId, @SpecialtyId);";
+
+      MySqlParameter stylistid = new MySqlParameter();
+      stylistid.ParameterName = "@StylistId";
+      stylistid.Value = _id;
+      cmd.Parameters.Add(stylistid);
+
+      MySqlParameter specialty_id = new MySqlParameter();
+      specialty_id.ParameterName = "@SpecialtyId";
+      specialty_id.Value = newSpecialty.GetSpecialtyId();
+      cmd.Parameters.Add(specialty_id); //.GetId()
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+    public List<Specialty> GetSpecialties()
+   {
+     MySqlConnection conn = DB.Connection();
+     conn.Open();
+     MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+     cmd.CommandText = @"SELECT specialty.* FROM stylist
+     JOIN stylist_specialties ON (stylist.id = stylist_specialties.stylist_id)
+     JOIN specialty ON (stylist_specialties.specialty_id = specialty.id)
+     WHERE stylist.id = @StylistId;";
+
+     MySqlParameter stylistdParameter = new MySqlParameter();
+     stylistdParameter.ParameterName = "@StylistId";
+     stylistdParameter.Value = _id;
+     cmd.Parameters.Add(stylistdParameter);
+
+     MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+     List<Specialty> Specialty = new List<Specialty>{};
+
+     while(rdr.Read())
+     {
+       int specialtyId = rdr.GetInt32(0);
+       string specialtyName = rdr.GetString(1);
+
+       Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
+       Specialty.Add(newSpecialty);
+     }
+     conn.Close();
+     if (conn != null)
+     {
+       conn.Dispose();
+     }
+     return Specialty;
+   }
   }
 }
