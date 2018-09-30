@@ -60,7 +60,6 @@ namespace HairSalon.Models
       {
         int specialtyId = rdr.GetInt32(0);
         string specialtyName = rdr.GetString(1);
-        // int specialtyStylistId = rdr.GetInt32(2);
 
 
         Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
@@ -221,6 +220,7 @@ namespace HairSalon.Models
       }
       return stylist;
     }
+
     public void Delete()
     {
       MySqlConnection conn = DB.Connection();
