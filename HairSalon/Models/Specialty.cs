@@ -10,12 +10,10 @@ namespace HairSalon.Models
   {
     private int _id;
     private string _name;
-    // private int _stylistId;
     public Specialty(string name, int Id = 0)
     {
       _id = Id;
       _name = name;
-      // _stylistId = stylistId;
 
     }
     public string GetSpecialtyName()
@@ -27,11 +25,6 @@ namespace HairSalon.Models
     {
       return _id;
     }
-    // public int GetStylistId()
-    // {
-    //   return _stylistId;
-    // }
-
 
     public override bool Equals(System.Object otherSpecialty)
     {
@@ -92,13 +85,6 @@ namespace HairSalon.Models
       name.Value = this._name;
       cmd.Parameters.Add(name);
 
-      // MySqlParameter stylistId = new MySqlParameter();
-      // stylistId.ParameterName = "@StylistId";
-      // stylistId.Value = this._stylistId;
-      // cmd.Parameters.Add(stylistId);
-
-
-
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
 
@@ -124,14 +110,12 @@ namespace HairSalon.Models
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       int specialtyId = 0;
       string specialtyName = "";
-      // int specialtyStylistId = 0;
 
 
       while (rdr.Read())
       {
         specialtyId = rdr.GetInt32(0);
         specialtyName = rdr.GetString(1);
-        // specialtyStylistId = rdr.GetInt32(2);
 
 
       }

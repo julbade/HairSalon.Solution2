@@ -194,37 +194,57 @@ namespace HairSalon.Models
       }
     }
     public List<Specialty> GetSpecialties()
-   {
-     MySqlConnection conn = DB.Connection();
-     conn.Open();
-     MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-     cmd.CommandText = @"SELECT specialty.* FROM stylist
-     JOIN stylist_specialties ON (stylist.id = stylist_specialties.stylist_id)
-     JOIN specialty ON (stylist_specialties.specialty_id = specialty.id)
-     WHERE stylist.id = @StylistId;";
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT specialties.* FROM stylists
+      JOIN stylists_specialties ON (stylists.id = stylists_specialties.stylist_id)
+      JOIN specialties ON (stylists_specialties.specialty_id = specialties.id)
+      WHERE stylists.id = @StylistId;";
 
-     MySqlParameter stylistdParameter = new MySqlParameter();
-     stylistdParameter.ParameterName = "@StylistId";
-     stylistdParameter.Value = _id;
-     cmd.Parameters.Add(stylistdParameter);
+      MySqlParameter stylistdParameter = new MySqlParameter();
+      stylistdParameter.ParameterName = "@StylistId";
+      stylistdParameter.Value = _id;
+      cmd.Parameters.Add(stylistdParameter);
 
-     MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-     List<Specialty> Specialty = new List<Specialty>{};
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Specialty> Specialty = new List<Specialty>{};
 
-     while(rdr.Read())
-     {
-       int specialtyId = rdr.GetInt32(0);
-       string specialtyName = rdr.GetString(1);
+      while(rdr.Read())
+      {
+        int specialtyId = rdr.GetInt32(0);
+        string specialtyName = rdr.GetString(1);
 
-       Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
-       Specialty.Add(newSpecialty);
-     }
-     conn.Close();
-     if (conn != null)
-     {
-       conn.Dispose();
-     }
-     return Specialty;
-   }
+        Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
+        Specialty.Add(newSpecialty);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return Specialty;
+    }
+
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      MySqlCommand cmd = new MySqlCommand("DELETE FROM stylists WHERE id = @StylistId; DELETE FROM stylists_specialties WHERE stylist_id = @StylistId;", conn);
+      MySqlParameter stylistIdParameter = new MySqlParameter();
+      stylistIdParameter.ParameterName = "@StylistId";
+      stylistIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(stylistIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
   }
 }
