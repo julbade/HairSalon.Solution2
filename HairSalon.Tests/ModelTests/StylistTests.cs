@@ -15,7 +15,7 @@ namespace HairSalon.Test
         }
         public StylistTests()
         {
-            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=julius_bade_test;";
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=julius_bade_tests;";
         }
 
       [TestMethod]
@@ -38,7 +38,7 @@ namespace HairSalon.Test
         Stylist secondStylist = new Stylist("Name");
 
         // Assert
-        Assert.AreEqual(firstStylist, secondStylist);
+        Assert.AreEqual(firstStylist.GetName(), secondStylist.GetName());
       }
       [TestMethod]
       public void Save_SavesToDatabase_StylistList()

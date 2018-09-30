@@ -11030,11 +11030,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/juliusbade/Desktop/HairSalon.Solutions/HairSalon.Tests/HairSalon.Tests.csproj",
+      "projectUniqueName": "/Users/juliusbade/Desktop/HairSalon.Solution2/HairSalon.Tests/HairSalon.Tests.csproj",
       "projectName": "HairSalon.Tests",
-      "projectPath": "/Users/juliusbade/Desktop/HairSalon.Solutions/HairSalon.Tests/HairSalon.Tests.csproj",
+      "projectPath": "/Users/juliusbade/Desktop/HairSalon.Solution2/HairSalon.Tests/HairSalon.Tests.csproj",
       "packagesPath": "/Users/juliusbade/.nuget/packages/",
-      "outputPath": "/Users/juliusbade/Desktop/HairSalon.Solutions/HairSalon.Tests/obj/",
+      "outputPath": "/Users/juliusbade/Desktop/HairSalon.Solution2/HairSalon.Tests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/juliusbade/.nuget/NuGet/NuGet.Config"
@@ -11049,8 +11049,8 @@
       "frameworks": {
         "netcoreapp1.1.4": {
           "projectReferences": {
-            "/Users/juliusbade/Desktop/HairSalon.Solutions/HairSalon/HairSalon.csproj": {
-              "projectPath": "/Users/juliusbade/Desktop/HairSalon.Solutions/HairSalon/HairSalon.csproj"
+            "/Users/juliusbade/Desktop/HairSalon.Solution2/HairSalon/HairSalon.csproj": {
+              "projectPath": "/Users/juliusbade/Desktop/HairSalon.Solution2/HairSalon/HairSalon.csproj"
             }
           }
         }
