@@ -10,7 +10,7 @@ Layout = "_Layout";
   <ol>
     @foreach (var clients in @Model)
     {
-      <li><h4>@clients.GetClientName() <br>  <a href="/clients/@clients.GetClientId()/update">Edit</a> | <a method="post" href="/clients/@clients.GetClientId()/delete">Delete</a></h4> </li>
+      <li><h4>@clients.GetClientName()<br>  <a href="/clients/@clients.GetClientId()/update">Edit</a> | <a method="post" href="/clients/@clients.GetClientId()/delete">Delete</a></h4> </li>
 
     }
   </ol>
