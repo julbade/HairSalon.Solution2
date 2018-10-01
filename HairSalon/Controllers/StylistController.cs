@@ -55,17 +55,17 @@ namespace HairSalon.Controllers
       return RedirectToAction("Details");
     }
 
-     [HttpGet("/stylists/{id}/specialties")]
-     public ActionResult Specialties(int id)
-     {
-       Dictionary<string, object> model = new Dictionary<string, object>();
-       Stylist selectedStylist = Stylist.Find(id);
-       List<Specialty> stylistSpecialties = selectedStylist.GetSpecialties();
-       List<Specialty> allSpecialties = Specialty.GetAll();
-       model.Add("stylist", selectedStylist);
-       model.Add("specialty", stylistSpecialties);
-       model.Add("allSpecialties", allSpecialties);
-       return View(model);
+    [HttpGet("/stylists/{id}/specialties")]
+    public ActionResult Specialties(int id)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Stylist selectedStylist = Stylist.Find(id);
+      List<Specialty> stylistSpecialties = selectedStylist.GetSpecialties();
+      List<Specialty> allSpecialties = Specialty.GetAll();
+      model.Add("stylist", selectedStylist);
+      model.Add("specialty", stylistSpecialties);
+      model.Add("allSpecialties", allSpecialties);
+      return View(model);
     }
 
     [HttpPost("/stylists/{stylistid}/specialties/new")]
@@ -90,6 +90,21 @@ namespace HairSalon.Controllers
     {
       Stylist thisStylist = Stylist.Find(stylistId);
       thisStylist.Delete();
+      return RedirectToAction("Index");
+    }
+
+    [HttpGet("/stylists/{stylistId}/update")]
+    public ActionResult UpdateForm(int stylistId)
+    {
+      Stylist thisStylist = Stylist.Find(stylistId);
+      return View(thisStylist);
+    }
+
+    [HttpPost("/stylists/{stylistId}/update")]
+    public ActionResult Update(int stylistId)
+    {
+      Stylist thisStylist = Stylist.Find(stylistId);
+      thisStylist.Edit(Request.Form["new-stylist-name"]);
       return RedirectToAction("Index");
     }
 

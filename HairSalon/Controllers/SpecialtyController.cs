@@ -71,6 +71,21 @@ namespace HairSalon.Controllers
       return RedirectToAction("Index");
     }
 
+    [HttpGet("/specialties/{speicaltyId}/update")]
+    public ActionResult UpdateForm(int speicaltyId)
+    {
+      Specialty thisSpecialty = Specialty.Find(speicaltyId);
+      return View(thisSpecialty);
+    }
+
+    [HttpPost("/specialties/{speicaltyId}/update")]
+    public ActionResult Update(int speicaltyId)
+    {
+      Specialty thisSpecialty = Specialty.Find(speicaltyId);
+      thisSpecialty.Edit(Request.Form["new-specialty-name"]);
+      return RedirectToAction("Index");
+    }
+
     [HttpPost("/specialties/delete")]
     public ActionResult DeleteAll()
     {
